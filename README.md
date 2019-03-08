@@ -97,7 +97,8 @@ l'étape 1, et préparer cette étape en pair-(quadri?)-programming !
   `install:` est sous-optimale…*)
 - M': Pour tester la configuration : pousser un commit avec un **test
   JUnit qui échoue volontairement**.
-- M': Ajouter un **badge Markdown pour Travis CI** dans le `README.md`
+- M': Ajouter un **badge Travis CI (en Markdown) reflétant l'état de
+  la branche `master`** dans le `README.md`
 - M': Récupérer la dernière version de la branche, faire un
   **rebase-interactif** pour nettoyer l'historique local et enlever le
   commit qui échoue, puis pousser avec `git push --force-with-lease origin setup-ci`
