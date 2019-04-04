@@ -21,3 +21,9 @@ L'objectif de cette partie du TP est de déployer automatiquement votre applicat
  [la documentation Heroku pour le déploiement d'images Docker](https://devcenter.heroku.com/articles/container-registry-and-runtime).
 - Une fois le déploiement "manuel" opérationnel, mettez en oeuvre le déploiement automatique via Travis en vous appuyant sur ces deux paragraphes de la documentation Heroku ([celui-ci](https://devcenter.heroku.com/articles/container-registry-and-runtime#pushing-an-existing-image) et [celui-là](https://devcenter.heroku.com/articles/container-registry-and-runtime#using-a-ci-cd-platform)).
 - Vérifiez que l'application se déploie bien automatiquement via Travis.
+
+> **Remarque** : Il est possible que vous rencontriez un problème de dépassement de quota RAM lors du déploiement manuel ou automatique dans Heroku de l'appli Java 8 dockerisée.
+>
+> Dans ce cas l'article suivant pourrait vous aider à solutionner ce problème :
+>
+> https://developers.redhat.com/blog/2017/03/14/java-inside-docker/
