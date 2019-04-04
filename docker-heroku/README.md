@@ -8,8 +8,8 @@ En termes de *workflow*, procédez comme usuellement (création d'une branche sp
 
 - En vous appuyant sur le cours et sur la [documentation Docker de Travis CI](https://docs.travis-ci.com/user/docker),
 modifiez votre configuration pour que Travis CI utilise `docker build` pour compiler et tester votre projet avec Maven.
-- Rappel : en plus du `Dockerfile` que vous devrez concevoir en utilisant une image de base appropriée, n'oubliez pas de commiter un fichier `.dockerignore` qui ignorera tout sauf les fichiers utiles à la compilation.
-- Remarque : Vous devrez vous assurer que la génération du rapport de couverture mise en place dans la Partie 2 est toujours fonctionnelle.
+- **Rappel** : en plus du `Dockerfile` que vous devrez concevoir en utilisant une image de base appropriée, n'oubliez pas de commiter un fichier `.dockerignore` qui ignorera tout sauf les fichiers utiles à la compilation.
+- **Remarque** : Vous devrez vous assurer que la génération du rapport de couverture précédemment mise en place avec Codecov est toujours fonctionnelle (celle-ci peut être déclenchée à l'intérieur du `Dockerfile`, vu que l'image `maven:3.6-jdk-8` contient `curl`, ou à l'extérieur en utilisant un *job* Travis CI séparé).
 
 ### 2. Déploiement sur Heroku
 
