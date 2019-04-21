@@ -9,7 +9,7 @@ En termes de *workflow*, procédez comme usuellement (création d'une branche sp
 - En vous appuyant sur le cours et sur la [documentation Docker de Travis CI](https://docs.travis-ci.com/user/docker),
 modifiez votre configuration pour que Travis CI utilise `docker build` pour compiler et tester votre projet avec Maven.
 - **Rappel** : en plus du `Dockerfile` que vous devrez concevoir en utilisant une image de base appropriée, n'oubliez pas de commiter un fichier `.dockerignore` qui ignorera tout sauf les fichiers utiles à la compilation.
-- **Remarque** : Vous devrez vous assurer que la génération du rapport de couverture précédemment mise en place avec Codecov est toujours fonctionnelle (celle-ci peut être déclenchée à l'intérieur du `Dockerfile`, vu que l'image `maven:3.6-jdk-8` contient `curl`, ou à l'extérieur en utilisant un *job* Travis CI séparé).
+- **Remarque** : Vous devrez vous assurer que la génération du rapport de couverture précédemment mise en place avec Codecov est toujours fonctionnelle. Celle-ci peut être déclenchée *via* une commande `docker run`, soit à l'intérieur du conteneur, vu que l'image `maven:3.6-jdk-8` contient `curl`, soit à l'extérieur, cf. la [documentation de Codecov](https://docs.codecov.io/docs/testing-with-docker) (on pourrait aussi utiliser un *job* Travis CI séparé).
 
 ### 2. Déploiement sur Heroku
 
@@ -20,7 +20,7 @@ L'objectif de cette partie du TP est de déployer automatiquement votre applicat
 - Mettez en oeuvre le déploiement de votre application sans passer par Travis en vous inspirant de
  [la documentation Heroku pour le déploiement d'images Docker](https://devcenter.heroku.com/articles/container-registry-and-runtime).
 - Une fois le déploiement "manuel" opérationnel, mettez en oeuvre le déploiement automatique *via* Travis en vous appuyant sur ces deux paragraphes de la documentation Heroku ([celui-ci](https://devcenter.heroku.com/articles/container-registry-and-runtime#pushing-an-existing-image) et [celui-là](https://devcenter.heroku.com/articles/container-registry-and-runtime#using-a-ci-cd-platform)).
-- Vérifiez que l'application se déploie bien automatiquement via Travis.
+- Vérifiez que l'application se déploie bien automatiquement *via* Travis.
 
 > **Remarque** : Il est possible que vous rencontriez un problème de dépassement de quota RAM lors du déploiement manuel ou automatique dans Heroku de l'appli Java 8 dockerisée.
 >
