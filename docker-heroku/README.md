@@ -18,7 +18,19 @@ L'objectif de cette partie du TP est de déployer automatiquement votre applicat
 
 - Pour commencer, l'un d'entre vous (pas forcément tout le groupe) doit créer un compte sur [Heroku](https://www.heroku.com/).
 - Mettez en oeuvre le déploiement de votre application sans passer par Travis en vous inspirant de
- [la documentation Heroku pour le déploiement d'images Docker](https://devcenter.heroku.com/articles/container-registry-and-runtime).
+    [la documentation Heroku pour le déploiement d'images Docker](https://devcenter.heroku.com/articles/container-registry-and-runtime).  
+    Résumé des commandes après avoir installé [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli#download-and-install) :
+	```bash
+	heroku login
+	heroku container:login  # ou bien => sudo heroku container:login
+	cd …/votre-projet
+	heroku regions
+	heroku create --region=eu nom-unique-de-votre-projet
+	heroku container:push web
+	heroku container:release web
+	heroku logs
+	heroku open
+	```
 - Une fois le déploiement "manuel" opérationnel, mettez en oeuvre le déploiement automatique *via* Travis en vous appuyant sur ces deux paragraphes de la documentation Heroku ([celui-ci](https://devcenter.heroku.com/articles/container-registry-and-runtime#pushing-an-existing-image) et [celui-là](https://devcenter.heroku.com/articles/container-registry-and-runtime#using-a-ci-cd-platform)).
 - Vérifiez que l'application se déploie bien automatiquement *via* Travis.
 
