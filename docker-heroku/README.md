@@ -9,7 +9,7 @@ En termes de *workflow*, procédez comme usuellement (création d'une branche sp
 - En vous appuyant sur le cours et sur la [documentation Docker de Travis CI](https://docs.travis-ci.com/user/docker),
 modifiez votre configuration pour que Travis CI utilise `docker build` pour compiler et tester votre projet avec Maven.
 - **Rappel** : en plus du `Dockerfile` que vous devrez concevoir en utilisant une image de base appropriée, n'oubliez pas de commiter un fichier `.dockerignore` qui ignorera tout sauf les fichiers utiles à la compilation.
-- **Remarque** : Vous devrez vous assurer que la génération du rapport de couverture précédemment mise en place avec Codecov est toujours fonctionnelle. Celle-ci peut être déclenchée *via* une commande `docker run`, à l'intérieur du conteneur, vu que l'image `maven:3.6-jdk-8` contient `curl`, ou à l'extérieur, cf. la [documentation de Codecov](https://docs.codecov.io/docs/testing-with-docker) (on pourrait aussi utiliser un *job* Travis CI séparé).
+- **Remarque** : Vous devrez vous assurer que la génération du rapport de couverture précédemment mise en place avec Codecov est toujours fonctionnelle. Celle-ci peut être déclenchée *via* une commande `docker run`, à l'intérieur du conteneur, vu que l'image `maven:3-jdk-8` contient `curl`, ou à l'extérieur, cf. la [documentation de Codecov](https://docs.codecov.io/docs/testing-with-docker) (on pourrait aussi utiliser un *job* Travis CI séparé).
 
 ### 2. Déploiement sur Heroku
 
@@ -39,3 +39,43 @@ L'objectif de cette partie du TP est de déployer automatiquement votre applicat
 > Dans ce cas l'article suivant pourrait vous aider à solutionner ce problème :
 >
 > https://developers.redhat.com/blog/2017/03/14/java-inside-docker/
+
+**Indication** : votre configuration Travis CI contiendra un fragment du style :
+
+```
+# cf. https://docs.travis-ci.com/user/docker/#branch-based-registry-pushes
+deploy:
+  provider: script
+  script: bash docker_push
+  on:
+branch: master
+```
+
+en utilisant le script `docker_push` ci-dessous (TODO: MàJ
+`$DOCKER_IMAGE`, `$PROJECT_NAME`)
+
+```bash
+#!/bin/bash
+set -e
+
+# HEROKU_AUTH_TOKEN is a Travis CI protected variable, generated using
+# https://dashboard.heroku.com/account/applications then set in Travis
+# cf. https://docs.travis-ci.com/user/environment-variables/#defining-variables-in-repository-settings
+# and https://devcenter.heroku.com/articles/container-registry-and-runtime#logging-in-to-the-registry
+# and https://docs.travis-ci.com/user/docker/#private-registry-login
+echo "$HEROKU_AUTH_TOKEN" | docker login -u _ --password-stdin registry.heroku.com
+
+docker push $DOCKER_IMAGE
+
+docker logout
+
+# cf. https://devcenter.heroku.com/articles/container-registry-and-runtime#api
+# and https://toedter.com/2018/06/02/heroku-docker-deployment-update/
+imageId=$(docker inspect $DOCKER_IMAGE --format="{{.Id}}")
+payload="{\"updates\": [{\"type\": \"web\", \"docker_image\": \"$imageId\"}]}"
+curl -n -X PATCH https://api.heroku.com/apps/$PROJECT_NAME/formation \
+  -d "$payload" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/vnd.heroku+json; version=3.docker-releases" \
+-H "Authorization: Bearer $HEROKU_AUTH_TOKEN"
+```

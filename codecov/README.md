@@ -2,13 +2,20 @@
 
 ## Exigences
 
-À implémenter dans une branche (+ Pull Request) avant de l'intégrer
-dans la branche `master` de votre projet :
+Créer un compte sur la plateforme [Codecov](https://codecov.io/) en vous authentifiant via votre compte GitHub.
+
+Implémenter la configuration requise dans une branche (+ Pull Request)
+avant de l'intégrer dans la branche `master` de votre projet :
 
 * Ajouter maven-failsafe-plugin (pour `mvn verify`) à votre POM
-* Ajouter le plugin Maven JaCoCo (pas Cobertura) à votre POM
-* Séparer le lancement des tests unitaires (`mvn test`) et
-  d'intégration (`mvn verify`) et instrumentaliser les tests avec
+
+* En vous appuyant sur la
+  [documentation de Codecov](https://docs.codecov.io/docs), configurer
+  votre projet pour qu'en cas de succès, le serveur de Travis CI
+  envoie le rapport des tests cobertura sur Codecov (vous utiliserez
+  le plugin Maven JaCoCo, pas Cobertura)
+* Contrainte : séparer le lancement des tests unitaires (`mvn test`)
+  et d'intégration (`mvn verify`) et instrumentaliser les tests avec
   JaCoCo dans les deux cas
 * Modifier le fichier de configuration de Travis CI pour pousser les
   résultats de couverture dans [Codecov](https://codecov.io/) après
